@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Introdução à Linguagem C · Turma</title>
+  <meta name="description" content="Links da turma de Introdução à Linguagem C, 2º semestre. Página mantida por Guilherme Batistela Machado.">
+  <meta name="author" content="Guilherme Batistela Machado">
+  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16150f" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Introdução à Linguagem C · Turma">
+  <meta property="og:description" content="Os LinkedIns da turma do 2º semestre, num lugar só.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3efe6;
+      --paper-2: #ebe5d8;
+      --ink: #1b1a16;
+      --ink-soft: #5d5a50;
+      --rule: #d6cfbf;
+      --accent: #c2410c;
+      --accent-ink: #fff8f0;
+      --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+      --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #16150f;
+        --paper-2: #201e17;
+        --ink: #ece7da;
+        --ink-soft: #9b968a;
+        --rule: #34312a;
+        --accent: #f0743a;
+        --accent-ink: #16150f;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 400 16px/1.5 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 56px 20px 40px;
+    }
+
+    /* cabeçalho */
+    .kicker {
+      font: 500 13px/1 var(--mono);
+      color: var(--ink-soft);
+      margin: 0 0 18px;
+    }
+    .kicker b { color: var(--accent); font-weight: 500; }
+    h1 {
+      font-weight: 600;
+      font-size: clamp(30px, 7vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0 0 14px;
+    }
+    .lede {
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 44ch;
+    }
+
+    /* dono */
+    .owner {
+      margin: 40px 0 48px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: transform .18s ease;
+    }
+    .owner:hover { transform: translateY(-2px); }
+    .owner .avatar {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: transparent;
+      width: 52px; height: 52px;
+      font-size: 17px;
+    }
+    .owner .tag {
+      font: 500 12px/1 var(--mono);
+      color: var(--accent);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .owner .name { font-size: 19px; }
+    .owner .handle { color: color-mix(in srgb, var(--paper) 60%, transparent); }
+    .owner .go { color: var(--paper); }
+
+    /* lista */
+    .list-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font: 500 13px/1 var(--mono);
+      color: var(--ink-soft);
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    ol { list-style: none; margin: 0; padding: 0; }
+    li { border-bottom: 1px solid var(--rule); }
+
+    .row {
+      display: grid;
+      grid-template-columns: 28px auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 8px;
+      margin: 0 -8px;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background-color .15s ease;
+    }
+    .row:hover { background: var(--paper-2); }
+    .idx {
+      font: 400 12px/1 var(--mono);
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+    .avatar {
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      font: 500 13px/1 var(--mono);
+      letter-spacing: .02em;
+    }
+    .who { min-width: 0; }
+    .name {
+      display: block;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+    .handle {
+      display: block;
+      font: 400 13px/1.4 var(--mono);
+      color: var(--ink-soft);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .go {
+      font: 400 18px/1 var(--mono);
+      color: var(--ink-soft);
+      transition: transform .18s ease, color .18s ease;
+    }
+    .row:hover .go, .owner:hover .go { transform: translate(3px, -3px); }
+    .row:hover .go { color: var(--accent); }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    footer {
+      margin-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      font: 400 13px/1.5 var(--mono);
+      color: var(--ink-soft);
+    }
+    footer code { color: var(--ink); }
+
+    @media (max-width: 420px) {
+      .wrap { padding-top: 40px; padding-left: 16px; padding-right: 16px; }
+      .row { grid-template-columns: auto 1fr auto; }
+      .idx { display: none; }
+      .owner { padding: 16px; gap: 14px; }
+      .owner .avatar { width: 44px; height: 44px; font-size: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <p class="kicker"><b>#include</b> &lt;turma.h&gt;</p>
+      <h1>Introdução à<br>Linguagem C</h1>
+      <p class="lede">Turma do 2º semestre. Os LinkedIns de quem passou pelos ponteiros, structs e segfaults com a gente.</p>
+    </header>
+
+    <a class="owner" href="https://www.linkedin.com/in/guilherme-batistela-machado/" target="_blank" rel="noopener">
+      <span class="avatar" aria-hidden="true">GM</span>
+      <span class="who">
+        <span class="tag">// quem mantém esta página</span>
+        <span class="name">Guilherme Batistela Machado</span>
+        <span class="handle">in/guilherme-batistela-machado</span>
+      </span>
+      <span class="go" aria-hidden="true">↗</span>
+    </a>
+
+    <section aria-labelledby="turma">
+      <div class="list-head">
+        <span id="turma">pessoas[ ]</span>
+        <span>10 itens</span>
+      </div>
+      <ol>
+        <li><a class="row" href="https://www.linkedin.com/in/acaris-benetti-dos-santos/" target="_blank" rel="noopener">
+          <span class="idx">00</span><span class="avatar" aria-hidden="true">AS</span>
+          <span class="who"><span class="name">Acaris Benetti dos Santos</span><span class="handle">in/acaris-benetti-dos-santos</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/erik-carvalho-6a2905352" target="_blank" rel="noopener">
+          <span class="idx">01</span><span class="avatar" aria-hidden="true">EC</span>
+          <span class="who"><span class="name">Erik Carvalho</span><span class="handle">in/erik-carvalho-6a2905352</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/gabriel-montemor/" target="_blank" rel="noopener">
+          <span class="idx">02</span><span class="avatar" aria-hidden="true">GM</span>
+          <span class="who"><span class="name">Gabriel Montemor</span><span class="handle">in/gabriel-montemor</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/giovana-gon%C3%A7alves-p%C3%A1dua-57a125312" target="_blank" rel="noopener">
+          <span class="idx">03</span><span class="avatar" aria-hidden="true">GP</span>
+          <span class="who"><span class="name">Giovana Gonçalves Pádua</span><span class="handle">in/giovana-gonçalves-pádua-57a125312</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/lucasresendev/" target="_blank" rel="noopener">
+          <span class="idx">04</span><span class="avatar" aria-hidden="true">LR</span>
+          <span class="who"><span class="name">Lucas Alberto dos Santos Resende</span><span class="handle">in/lucasresendev</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/carvalhogluciano/" target="_blank" rel="noopener">
+          <span class="idx">05</span><span class="avatar" aria-hidden="true">LC</span>
+          <span class="who"><span class="name">Luciano Carvalho</span><span class="handle">in/carvalhogluciano</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/namolinar/" target="_blank" rel="noopener">
+          <span class="idx">06</span><span class="avatar" aria-hidden="true">NM</span>
+          <span class="who"><span class="name">NA Molinar</span><span class="handle">in/namolinar</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/renataramos29/" target="_blank" rel="noopener">
+          <span class="idx">07</span><span class="avatar" aria-hidden="true">RR</span>
+          <span class="who"><span class="name">Renata Ramos</span><span class="handle">in/renataramos29</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/roberta-reis96/" target="_blank" rel="noopener">
+          <span class="idx">08</span><span class="avatar" aria-hidden="true">RR</span>
+          <span class="who"><span class="name">Roberta Reis</span><span class="handle">in/roberta-reis96</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a class="row" href="https://www.linkedin.com/in/ximena-andrea-acosta-meza-98615b272" target="_blank" rel="noopener">
+          <span class="idx">09</span><span class="avatar" aria-hidden="true">XM</span>
+          <span class="who"><span class="name">Ximena Andrea Acosta Meza</span><span class="handle">in/ximena-andrea-acosta-meza-98615b272</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+      </ol>
+    </section>
+
+    <footer>
+      <span><code>return 0;</code></span>
+      <span>Todos os links abrem o LinkedIn.</span>
+    </footer>
+  </main>
+</body>
+</html>
