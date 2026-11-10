@@ -4,38 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Introdução à Linguagem C · Turma</title>
-  <meta name="description" content="Links da turma de Introdução à Linguagem C, 2º semestre. Página mantida por Guilherme Batistela Machado.">
+  <meta name="description" content="Links da turma de Introdução à Linguagem C, 2º semestre, com o professor Luciano Carvalho.">
   <meta name="author" content="Guilherme Batistela Machado">
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#16150f" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#cfc8b8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1b18" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Introdução à Linguagem C · Turma">
-  <meta property="og:description" content="Os LinkedIns da turma do 2º semestre, num lugar só.">
+  <meta property="og:description" content="O professor e a turma do 2º semestre, num lugar só.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --paper: #f3efe6;
-      --paper-2: #ebe5d8;
-      --ink: #1b1a16;
-      --ink-soft: #5d5a50;
-      --rule: #d6cfbf;
-      --accent: #c2410c;
-      --accent-ink: #fff8f0;
+      --desk: #cfc8b8;
+      --desk-line: rgba(0,0,0,.04);
+      --paper: #fbf9f1;
+      --bar: #e2ecd8;
+      --bar-line: #cfdcc2;
+      --ink: #24231f;
+      --ink-soft: #6b685e;
+      --red: #c4321c;
+      --perf: rgba(36,35,31,.22);
+      --shadow: 0 1px 0 rgba(0,0,0,.06), 0 18px 40px -18px rgba(40,30,10,.45);
       --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-      --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+      --hole: 40px;
+      --gap: 28px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --paper: #16150f;
-        --paper-2: #201e17;
-        --ink: #ece7da;
-        --ink-soft: #9b968a;
-        --rule: #34312a;
-        --accent: #f0743a;
-        --accent-ink: #16150f;
+        --desk: #1c1b18;
+        --desk-line: rgba(255,255,255,.025);
+        --shadow: 0 1px 0 rgba(0,0,0,.4), 0 30px 60px -20px rgba(0,0,0,.8);
       }
     }
 
@@ -43,230 +44,379 @@
     html { -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
-      background: var(--paper);
+      min-height: 100vh;
+      background-color: var(--desk);
+      background-image:
+        repeating-linear-gradient(90deg, var(--desk-line) 0 1px, transparent 1px 7px),
+        repeating-linear-gradient(0deg, var(--desk-line) 0 1px, transparent 1px 11px);
       color: var(--ink);
-      font: 400 16px/1.5 var(--sans);
+      font: 400 15px/1.55 var(--mono);
       -webkit-font-smoothing: antialiased;
+      padding: 48px 20px 64px;
     }
     a { color: inherit; }
-    ::selection { background: var(--accent); color: var(--accent-ink); }
+    ::selection { background: var(--red); color: var(--paper); }
 
-    .wrap {
-      max-width: 640px;
+    /* ---------- folha ---------- */
+    .sheet {
+      position: relative;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 56px 20px 40px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 36px calc(var(--hole) + var(--gap)) 0;
+    }
+    /* furos de tracionamento */
+    .sheet::before, .sheet::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      width: var(--hole);
+      background: radial-gradient(circle, var(--desk) 0 5px, rgba(0,0,0,.18) 5.6px, transparent 6.4px) center 13px / 100% 26px repeat-y;
+    }
+    .sheet::before { left: 0;  border-right: 1px dashed var(--perf); }
+    .sheet::after  { right: 0; border-left: 1px dashed var(--perf); }
+
+    /* faixa que estende até a picotagem */
+    .bleed { margin-left: calc(var(--gap) * -1); margin-right: calc(var(--gap) * -1); padding-left: var(--gap); padding-right: var(--gap); }
+
+    .runline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--bar-line);
     }
 
-    /* cabeçalho */
-    .kicker {
-      font: 500 13px/1 var(--mono);
-      color: var(--ink-soft);
-      margin: 0 0 18px;
+    /* ---------- cabeçalho ---------- */
+    header {
+      position: relative;
+      padding: 44px 0 40px;
     }
-    .kicker b { color: var(--accent); font-weight: 500; }
-    h1 {
-      font-weight: 600;
-      font-size: clamp(30px, 7vw, 44px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
+    .big-c {
+      position: absolute;
+      right: -14px;
+      top: 6px;
+      font: 900 260px/0.8 var(--display);
+      font-stretch: 70%;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--red);
+      opacity: .9;
+      pointer-events: none;
+      user-select: none;
+    }
+    .big-c::after {
+      content: "";
+      position: absolute;
+      left: 54%;
+      top: 41%;
+      width: 16px; height: 16px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+    .pre {
+      font-size: 13px;
+      color: var(--ink-soft);
       margin: 0 0 14px;
     }
+    .pre b { color: var(--red); font-weight: 500; }
+    h1 {
+      position: relative;
+      font: 800 clamp(46px, 10vw, 84px)/0.9 var(--display);
+      font-stretch: 72%;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin: 0 0 22px;
+    }
     .lede {
-      color: var(--ink-soft);
+      position: relative;
       margin: 0;
-      max-width: 44ch;
+      max-width: 40ch;
+      color: var(--ink-soft);
     }
 
-    /* dono */
-    .owner {
-      margin: 40px 0 48px;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
+    /* ---------- professor ---------- */
+    .prof {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      border: 2px solid var(--ink);
+      padding: 26px 24px 22px;
+      margin: 8px 0 52px;
+      background: var(--paper);
+      box-shadow: 6px 6px 0 var(--ink);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .prof:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
+    .prof:active { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--ink); }
+    .stamp {
+      position: absolute;
+      top: -16px;
+      right: 18px;
+      font: 800 14px/1 var(--display);
+      font-stretch: 90%;
+      letter-spacing: .18em;
+      color: var(--red);
+      border: 2.5px solid var(--red);
+      border-radius: 3px;
+      padding: 7px 10px 6px 12px;
+      background: var(--paper);
+      transform: rotate(4deg);
+    }
+    .prof-label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+    }
+    .prof-row {
+      display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px;
+      gap: 18px;
+    }
+    .mono-av {
+      flex: none;
+      width: 72px; height: 72px;
+      display: grid; place-items: center;
       background: var(--ink);
       color: var(--paper);
-      text-decoration: none;
-      border-radius: 4px;
-      transition: transform .18s ease;
+      font: 800 30px/1 var(--display);
+      font-stretch: 75%;
+      letter-spacing: .02em;
     }
-    .owner:hover { transform: translateY(-2px); }
-    .owner .avatar {
-      background: var(--accent);
-      color: var(--accent-ink);
-      border-color: transparent;
-      width: 52px; height: 52px;
-      font-size: 17px;
-    }
-    .owner .tag {
-      font: 500 12px/1 var(--mono);
-      color: var(--accent);
-      margin-bottom: 6px;
+    .prof-name {
       display: block;
+      font: 800 clamp(30px, 6vw, 44px)/0.95 var(--display);
+      font-stretch: 75%;
+      text-transform: uppercase;
     }
-    .owner .name { font-size: 19px; }
-    .owner .handle { color: color-mix(in srgb, var(--paper) 60%, transparent); }
-    .owner .go { color: var(--paper); }
+    .prof-handle {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+    .prof-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--perf);
+      width: 100%;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .prof-cta .arr { color: var(--red); transition: transform .18s ease; }
+    .prof:hover .prof-cta .arr { transform: translateX(4px); }
 
-    /* lista */
+    /* ---------- lista ---------- */
     .list-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font: 500 13px/1 var(--mono);
-      color: var(--ink-soft);
-      padding-bottom: 12px;
-      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 10px;
     }
-    ol { list-style: none; margin: 0; padding: 0; }
-    li { border-bottom: 1px solid var(--rule); }
+    .list-head h2 {
+      font: 800 26px/1 var(--display);
+      font-stretch: 75%;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .list-head span { font-size: 12px; color: var(--ink-soft); letter-spacing: .06em; }
+
+    ol { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+    li:nth-child(odd) .row { background: var(--bar); }
 
     .row {
+      position: relative;
       display: grid;
-      grid-template-columns: 28px auto 1fr auto;
+      grid-template-columns: 30px 1fr auto;
       align-items: center;
       gap: 14px;
-      padding: 14px 8px;
-      margin: 0 -8px;
+      min-height: 64px;
+      padding-top: 10px;
+      padding-bottom: 10px;
       text-decoration: none;
-      border-radius: 3px;
-      transition: background-color .15s ease;
     }
-    .row:hover { background: var(--paper-2); }
-    .idx {
-      font: 400 12px/1 var(--mono);
-      color: var(--ink-soft);
-      font-variant-numeric: tabular-nums;
+    .row::before {
+      content: "▶";
+      position: absolute;
+      left: 8px;
+      font-size: 10px;
+      color: var(--red);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .15s ease, transform .15s ease;
     }
-    .avatar {
-      width: 40px; height: 40px;
-      display: grid; place-items: center;
-      border: 1px solid var(--rule);
-      border-radius: 50%;
-      font: 500 13px/1 var(--mono);
-      letter-spacing: .02em;
-    }
+    .row:hover::before { opacity: 1; transform: none; }
+    .idx { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
     .who { min-width: 0; }
     .name {
       display: block;
-      font-weight: 500;
-      line-height: 1.25;
+      font: 650 19px/1.15 var(--display);
+      font-stretch: 85%;
+      transition: color .15s ease;
     }
     .handle {
       display: block;
-      font: 400 13px/1.4 var(--mono);
+      font-size: 12.5px;
       color: var(--ink-soft);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
     .go {
-      font: 400 18px/1 var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .06em;
       color: var(--ink-soft);
-      transition: transform .18s ease, color .18s ease;
+      transition: color .15s ease;
     }
-    .row:hover .go, .owner:hover .go { transform: translate(3px, -3px); }
-    .row:hover .go { color: var(--accent); }
+    .row:hover .name, .row:hover .go { color: var(--red); }
 
-    a:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
+    a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 
+    /* ---------- rodapé ---------- */
     footer {
-      margin-top: 48px;
+      margin-top: 44px;
+      padding: 18px 0 30px;
+      border-top: 1px dashed var(--perf);
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
-      font: 400 13px/1.5 var(--mono);
+      font-size: 12px;
       color: var(--ink-soft);
     }
-    footer code { color: var(--ink); }
-
-    @media (max-width: 420px) {
-      .wrap { padding-top: 40px; padding-left: 16px; padding-right: 16px; }
-      .row { grid-template-columns: auto 1fr auto; }
-      .idx { display: none; }
-      .owner { padding: 16px; gap: 14px; }
-      .owner .avatar { width: 44px; height: 44px; font-size: 15px; }
+    footer code { color: var(--ink); font-weight: 600; }
+    .cursor {
+      display: inline-block;
+      width: .6em; height: 1.1em;
+      margin-left: 2px;
+      vertical-align: -0.2em;
+      background: var(--red);
+      animation: blink 1.1s steps(1) infinite;
     }
+
+    /* impressão linha a linha */
+    .p { animation: print .5s steps(5, end) both; animation-delay: calc(var(--i, 0) * 70ms); }
+    @keyframes print { from { clip-path: inset(-60px -60px 100% -60px); } to { clip-path: inset(-60px); } }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ---------- celular ---------- */
+    @media (max-width: 600px) {
+      :root { --hole: 22px; --gap: 14px; }
+      body { padding: 16px 8px 32px; }
+      .sheet::before, .sheet::after {
+        background: radial-gradient(circle, var(--desk) 0 3.5px, rgba(0,0,0,.18) 4px, transparent 4.6px) center 10px / 100% 20px repeat-y;
+      }
+      .runline span:last-child { display: none; }
+      header { padding: 32px 0 30px; }
+      h1 { font-size: 40px; }
+      .big-c { font-size: 150px; right: -6px; top: 14px; opacity: .35; }
+      .big-c::after { width: 11px; height: 11px; }
+      .prof { padding: 24px 16px 18px; box-shadow: 4px 4px 0 var(--ink); margin-right: 4px; }
+      .prof:hover { box-shadow: 6px 6px 0 var(--ink); }
+      .mono-av { width: 54px; height: 54px; font-size: 22px; }
+      .prof-row { gap: 14px; }
+      .row { grid-template-columns: 1fr auto; gap: 10px; }
+      .idx { display: none; }
+      .row::before { display: none; }
+      .name { font-size: 17px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
+      .p, .cursor { animation: none; }
       * { transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
+  <main class="sheet">
+    <div class="runline bleed p" style="--i:0">
+      <span>turma_2sem.c</span>
+      <span>Saída da impressora · pág. 001</span>
+    </div>
+
     <header>
-      <p class="kicker"><b>#include</b> &lt;turma.h&gt;</p>
-      <h1>Introdução à<br>Linguagem C</h1>
-      <p class="lede">Turma do 2º semestre. Os LinkedIns de quem passou pelos ponteiros, structs e segfaults com a gente.</p>
+      <span class="big-c" aria-hidden="true">C</span>
+      <p class="pre p" style="--i:1"><b>#include</b> &lt;turma.h&gt;</p>
+      <h1 class="p" style="--i:2">Introdução<br>à Linguagem C</h1>
+      <p class="lede p" style="--i:3">Turma do 2º semestre. O professor e o pessoal que encarou ponteiros, structs e segfaults junto.</p>
     </header>
 
-    <a class="owner" href="https://www.linkedin.com/in/guilherme-batistela-machado/" target="_blank" rel="noopener">
-      <span class="avatar" aria-hidden="true">GM</span>
-      <span class="who">
-        <span class="tag">// quem mantém esta página</span>
-        <span class="name">Guilherme Batistela Machado</span>
-        <span class="handle">in/guilherme-batistela-machado</span>
+    <a class="prof p" style="--i:4" href="https://www.linkedin.com/in/carvalhogluciano/" target="_blank" rel="noopener">
+      <span class="stamp" aria-hidden="true">PROFESSOR</span>
+      <span class="prof-label">/* professor da disciplina */</span>
+      <span class="prof-row">
+        <span class="mono-av" aria-hidden="true">LC</span>
+        <span>
+          <span class="prof-name">Luciano Carvalho</span>
+          <span class="prof-handle">in/carvalhogluciano</span>
+        </span>
       </span>
-      <span class="go" aria-hidden="true">↗</span>
+      <span class="prof-cta">Ver perfil no LinkedIn <span class="arr" aria-hidden="true">→</span></span>
     </a>
 
     <section aria-labelledby="turma">
-      <div class="list-head">
-        <span id="turma">pessoas[ ]</span>
-        <span>10 itens</span>
+      <div class="list-head p" style="--i:5">
+        <h2 id="turma">Turma</h2>
+        <span>aluno[10]</span>
       </div>
-      <ol>
-        <li><a class="row" href="https://www.linkedin.com/in/acaris-benetti-dos-santos/" target="_blank" rel="noopener">
-          <span class="idx">00</span><span class="avatar" aria-hidden="true">AS</span>
+      <ol class="bleed-list">
+        <li class="p" style="--i:6"><a class="row bleed" href="https://www.linkedin.com/in/guilherme-batistela-machado/" target="_blank" rel="noopener">
+          <span class="idx">00</span>
+          <span class="who"><span class="name">Guilherme Batistela Machado</span><span class="handle">in/guilherme-batistela-machado</span></span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:7"><a class="row bleed" href="https://www.linkedin.com/in/acaris-benetti-dos-santos/" target="_blank" rel="noopener">
+          <span class="idx">01</span>
           <span class="who"><span class="name">Acaris Benetti dos Santos</span><span class="handle">in/acaris-benetti-dos-santos</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/erik-carvalho-6a2905352" target="_blank" rel="noopener">
-          <span class="idx">01</span><span class="avatar" aria-hidden="true">EC</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:8"><a class="row bleed" href="https://www.linkedin.com/in/erik-carvalho-6a2905352" target="_blank" rel="noopener">
+          <span class="idx">02</span>
           <span class="who"><span class="name">Erik Carvalho</span><span class="handle">in/erik-carvalho-6a2905352</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/gabriel-montemor/" target="_blank" rel="noopener">
-          <span class="idx">02</span><span class="avatar" aria-hidden="true">GM</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:9"><a class="row bleed" href="https://www.linkedin.com/in/gabriel-montemor/" target="_blank" rel="noopener">
+          <span class="idx">03</span>
           <span class="who"><span class="name">Gabriel Montemor</span><span class="handle">in/gabriel-montemor</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/giovana-gon%C3%A7alves-p%C3%A1dua-57a125312" target="_blank" rel="noopener">
-          <span class="idx">03</span><span class="avatar" aria-hidden="true">GP</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:10"><a class="row bleed" href="https://www.linkedin.com/in/giovana-gon%C3%A7alves-p%C3%A1dua-57a125312" target="_blank" rel="noopener">
+          <span class="idx">04</span>
           <span class="who"><span class="name">Giovana Gonçalves Pádua</span><span class="handle">in/giovana-gonçalves-pádua-57a125312</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/lucasresendev/" target="_blank" rel="noopener">
-          <span class="idx">04</span><span class="avatar" aria-hidden="true">LR</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:11"><a class="row bleed" href="https://www.linkedin.com/in/lucasresendev/" target="_blank" rel="noopener">
+          <span class="idx">05</span>
           <span class="who"><span class="name">Lucas Alberto dos Santos Resende</span><span class="handle">in/lucasresendev</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/carvalhogluciano/" target="_blank" rel="noopener">
-          <span class="idx">05</span><span class="avatar" aria-hidden="true">LC</span>
-          <span class="who"><span class="name">Luciano Carvalho</span><span class="handle">in/carvalhogluciano</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/namolinar/" target="_blank" rel="noopener">
-          <span class="idx">06</span><span class="avatar" aria-hidden="true">NM</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:12"><a class="row bleed" href="https://www.linkedin.com/in/namolinar/" target="_blank" rel="noopener">
+          <span class="idx">06</span>
           <span class="who"><span class="name">NA Molinar</span><span class="handle">in/namolinar</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/renataramos29/" target="_blank" rel="noopener">
-          <span class="idx">07</span><span class="avatar" aria-hidden="true">RR</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:13"><a class="row bleed" href="https://www.linkedin.com/in/renataramos29/" target="_blank" rel="noopener">
+          <span class="idx">07</span>
           <span class="who"><span class="name">Renata Ramos</span><span class="handle">in/renataramos29</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/roberta-reis96/" target="_blank" rel="noopener">
-          <span class="idx">08</span><span class="avatar" aria-hidden="true">RR</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:14"><a class="row bleed" href="https://www.linkedin.com/in/roberta-reis96/" target="_blank" rel="noopener">
+          <span class="idx">08</span>
           <span class="who"><span class="name">Roberta Reis</span><span class="handle">in/roberta-reis96</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a class="row" href="https://www.linkedin.com/in/ximena-andrea-acosta-meza-98615b272" target="_blank" rel="noopener">
-          <span class="idx">09</span><span class="avatar" aria-hidden="true">XM</span>
+          <span class="go">ABRIR ↗</span></a></li>
+        <li class="p" style="--i:15"><a class="row bleed" href="https://www.linkedin.com/in/ximena-andrea-acosta-meza-98615b272" target="_blank" rel="noopener">
+          <span class="idx">09</span>
           <span class="who"><span class="name">Ximena Andrea Acosta Meza</span><span class="handle">in/ximena-andrea-acosta-meza-98615b272</span></span>
-          <span class="go" aria-hidden="true">↗</span></a></li>
+          <span class="go">ABRIR ↗</span></a></li>
       </ol>
     </section>
 
-    <footer>
-      <span><code>return 0;</code></span>
-      <span>Todos os links abrem o LinkedIn.</span>
+    <footer class="p" style="--i:16">
+      <span><code>return 0;</code><span class="cursor" aria-hidden="true"></span></span>
+      <span>Todos os links abrem o LinkedIn</span>
     </footer>
   </main>
 </body>
